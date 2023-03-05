@@ -1,0 +1,63 @@
+Services
+    Selecting services
+    Setting up preferred schedule
+    Qr code confirmation
+ 
+Schedule 
+    Can cancel schedule
+    Download Schedule details confirmation as image with Qr code
+
+Donation
+
+Optional: Warning and further restriction for user's account as penalty for agreement violation
+
+Done
+Login 
+Registration with email authentication
+
+Profile 
+    With Personal information
+    With Health information
+    With Credenntial information
+    Update profile information
+
+History 
+    View past schedule
+     Review  
+
+
+Admin
+Dashboard
+User crud
+
+
+Todo List
+
+Service Booking = done
+Notification
+Upload Picture = done
+
+Sidebar(Optional)
+
+Fix Health Screen
+
+Non-Functional Requirements
+
+Disable account = not done
+Non-verified account = done
+Book am can book pm? = not done
+User can only once a day
+
+
+rickydonadillo02@gmail.com
+password
+ 
+051701
+
+
+        "expo-notifications":
+        {
+          "icon":"./assets/favicon.png",
+          "color":"#ffffff",
+          "sounds":"./assets/notif.wav" 
+        }
