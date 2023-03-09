@@ -1,4 +1,8 @@
 # ealaga-mobile-app
 
-Npx expo start or npm start in ealaga folder
-npm start at backend
+#elaga
+#Npx expo start or 
+#npm start
+
+#backend
+#npm start at 
