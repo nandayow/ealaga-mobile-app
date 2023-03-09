@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { NativeBaseProvider } from "native-base";
 import { NavigationContainer } from "@react-navigation/native";
 import { LogBox } from "react-native";
@@ -11,44 +11,40 @@ import store from "./Redux/store";
 
 // Context API
 import Auth from "./Context/store/Auth";
+import MainNavigator from "./Navigators/MainNavigator";
 
-// Navigators
-import Main from "./Navigators/Main";
+// Navigators 
 
 LogBox.ignoreAllLogs(true);
 
-export default function App() { 
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: true,
+  }),
+});
 
-  // Notifications.scheduleNotificationAsync({
-  //   content: {
-  //     title: "You've got mail! 📬",
-  //     // sound:  'notif.wav', // Provide ONLY the base filename 
-      
-  //   },
-  //   trigger: {
-  //     seconds: 2,
-  //     channelId: "new-emails",
-  //   },
-  // });
-
-  async function schedulePushNotification() {
-    await Notifications.scheduleNotificationAsync({
-      content: {
-        title: "You've got mail! 📬",
-        body: 'Here is the notification body',
-        data: { data: 'goes here' },
-      },
-      trigger: { seconds: 0 },
-    });
-  }
-
+export default function App() {
+  // Eg. schedule the notification
+  Notifications.scheduleNotificationAsync({
+    content: {
+      title: "eAlaga Reminders!!!",
+      body: "Kndly Check your Schedule",
+      sound: require("./assets/notif.wav"), 
+    },
+    trigger: {
+      seconds: 2,
+      channelId: "new-emails", // <- for Android 8.0+, see definition above
+    },
+  });
 
   return (
     <Auth>
       <Provider store={store}>
         <NativeBaseProvider>
           <NavigationContainer>
-            <Main />
+            <MainNavigator />
             <Toast />
           </NavigationContainer>
         </NativeBaseProvider>

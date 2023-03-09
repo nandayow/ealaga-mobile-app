@@ -2,15 +2,15 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 
 // Screens
-import HomeContainer from "../Screens/Home/HomeContainer";
-import ServicesContainer from "../Screens/Services/ServicesContainer";
-import HistoryContainer from "../Screens/History/HistoryContainer";
-import DonationsContainer from "../Screens/Donations/DonationsContainer";
-import ScheduleContainer from "../Screens/Schedules/ScheduleContainer";
+import HomeContainer from "../Screens/Home/Index";
+import ServicesContainer from "../Screens/Services/Index";
+import HistoryContainer from "../Screens/History/Index";
+import DonationsContainer from "../Screens/Donations";
+import ScheduleContainer from "../Screens/Schedules/Index";
 
 const Stack = createStackNavigator();
 
-function MyStack() {
+function HomeStack() {
   return (
     <Stack.Navigator
     initialRouteName="home" 
@@ -59,5 +59,5 @@ function MyStack() {
 }
 
 export default function HomeNavigator() {
-  return <MyStack />;
+  return <HomeStack />;
 }

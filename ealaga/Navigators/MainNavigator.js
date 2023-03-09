@@ -10,10 +10,10 @@ import ProfileNavigator from "./ProfileNavigator";
 
 // Auth
 import AuthGlobal from "../Context/store/AuthGlobal";
-import AboutContainer from "../Screens/About/AboutContainer";
+import AboutContainer from "../Screens/About/Index"; 
 const Tab = createBottomTabNavigator();
 
-const Main = () => {
+const MainNavigator = () => {
   const context = useContext(AuthGlobal);
 
   return (
@@ -36,7 +36,7 @@ const Main = () => {
           name="About"
           component={AboutContainer}
           options={{
-            headerShown: false,
+            headerShown: false, 
             tabBarIcon: ({ color }) => (
               <Icon name="info" color={color} size={30} />
             ),
@@ -46,7 +46,7 @@ const Main = () => {
       {context.stateUser.isAuthenticated === true ? (
         <Tab.Screen
           name="Home"
-          component={HomeNavigator}
+          component={HomeNavigator} 
           options={{
             headerShown: false,
             tabBarIcon: ({ color }) => (
@@ -83,4 +83,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default MainNavigator;

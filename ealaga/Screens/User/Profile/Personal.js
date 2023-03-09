@@ -40,6 +40,7 @@ import FormContainerProfile from "../../../Shared/Form/FormContainerProfile";
 import InputModal from "../../../Shared/Form/InputModal";
 import FormContainerModal from "../../../Shared/Form/FormContainerModal";
 import SuperAlert from "react-native-super-alert";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 // Dimensions
 const windowWidth = Dimensions.get("window").width;
@@ -118,8 +119,8 @@ function Personal() {
                 headers: { Authorization: `Bearer ${res}` },
               }
             )
-            .then(
-              (user) => setUserProfile(user.data),
+            .then((user) => [
+              setUserProfile(user.data),
               setFirstname(context.stateUser.user.firstname),
               setMiddlename(context.stateUser.user.middlename),
               setLastname(context.stateUser.user.lastname),
@@ -128,8 +129,8 @@ function Personal() {
               setHouseNumber(context.stateUser.user.address.house_purok_no),
               setStreet(context.stateUser.user.address.street),
               setValue(context.stateUser.user.address.barangay),
-              setLoading(false)
-            );
+              setLoading(false),
+            ]);
         })
         .catch((error) => console.log(error));
 
@@ -226,11 +227,11 @@ function Personal() {
 
   const UpdateProfile = () => {
     var oras = new Date(); //Current Hours
-    let getYearNow = moment(oras.toDateString()).format("YYYY");
-    let getYearBirthdate = moment(date.toDateString()).format("YYYY");
+    let getYearNow = moment(oras).format("YYYY");
+    let getYearBirthdate = moment(date).format("YYYY");
     let edad = getYearNow - getYearBirthdate;
 
-    let newBirtdate = moment(date.toDateString()).format();
+    let newBirtdate = moment(date).format();
     setBirthday(date);
     setAge(edad);
 
@@ -549,7 +550,7 @@ function Personal() {
   };
 
   return (
-    <ScrollView
+    <SafeAreaProvider
       style={styles.container}
       refreshControl={
         <RefreshControl refreshing={refresh} onRefresh={() => pullMe()} />
@@ -780,13 +781,13 @@ function Personal() {
                   <View>
                     <TouchableOpacity
                       style={styles.datePickerButton}
-                      title={date.toDateString()}
+                      title={date.toISOString()}
                       // color="white"
                       onPress={showDatePicker}
                     >
                       <Text>
                         BirthDate :
-                        {moment(date.toDateString()).format("MMM DD YYYY")}
+                        {moment(date.toISOString()).format("MMM DD YYYY")}
                       </Text>
                     </TouchableOpacity>
                   </View>
@@ -860,7 +861,7 @@ function Personal() {
         </View>
       </Modal>
       <SuperAlert customStyle={customStyle} />
-    </ScrollView>
+    </SafeAreaProvider>
   );
 }
 

@@ -16,9 +16,11 @@ function MyTabs() {
         tabBarStyle: { backgroundColor: Colors.rose_200 },
         tabBarActiveTintColor: Colors.TextColor,
         tabBarInactiveTintColor: Colors.gray,
+        tabBarPressColor: Colors.main, 
+        swipeEnabled:false, 
       }}
     >
-      <Tab.Screen name="Personal" component={Personal} />
+      <Tab.Screen name="Personal" component={Personal} screenOptions />
       <Tab.Screen name="Health" component={Health} />
       <Tab.Screen name="Credentials" component={Credentials} />
     </Tab.Navigator>

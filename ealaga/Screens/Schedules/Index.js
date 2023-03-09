@@ -4,21 +4,19 @@ import { Dimensions, StyleSheet, Text, View } from "react-native";
 // Shared
 import Header from "../../Shared/Header";
 import Colors from "../../Shared/Color";
-import ScheduleCard from "./ScheduleCard";
-// import Capture from "./Capture";
+import ScheduleCard from "./ScheduleCard"; 
 
 // Dimensions
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
-const ScheduleContainer = (props,ScheduleCardprops) => {
+const ScheduleContainer = (props) => {
   return (
     <View>
       <Header navigation={props.navigation} />
       <View style={styles.container}>
         <Text style={styles.title}>My Schedule</Text>
-        <ScheduleCard navigation={ScheduleCardprops.navigation} /> 
-        {/* <Capture navigation={props.navigation} /> */}
+        <ScheduleCard navigation={props.navigation} />  
       </View>
     </View>
   );

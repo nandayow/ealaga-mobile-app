@@ -1,5 +1,7 @@
+import { ScrollView } from "native-base";
 import React, { useState } from "react";
 import {
+  Animated,
   Dimensions,
   Image,
   Modal,
@@ -20,56 +22,80 @@ const windowHeight = Dimensions.get("window").height;
 
 const AboutContainer = (props) => {
   const [modalVisible, setModalVisible] = useState(true);
+  const position = new Animated.Value(0);
+
+  Animated.loop(
+    Animated.sequence([
+      Animated.timing(position, {
+        toValue: 10,
+        duration: 1000,
+        useNativeDriver: false,
+      }),
+      Animated.timing(position, {
+        toValue: 0,
+        duration: 1000,
+        useNativeDriver: false,
+      }),
+    ])
+  ).start();
 
   return (
     <SafeAreaProvider style={styles.container}>
       <Header navigation={props.navigation} />
-      <View style={styles.imagecontainer}>
-        <Image
-          source={require("../../assets/center.png")}
-          style={styles.imahe}
-        />
-      </View>
-      <Text style={styles.title}>Taguig City Center for the Elderly</Text>
+      <ScrollView>
+        <View style={styles.imagecontainer}>
+          <Animated.Image
+            source={require("../../assets/center.png")}
+            style={[
+              styles.imahe,
+              {  bottom: position },
+            ]}
+             
+          />
+        </View>
+        <Text style={styles.title}>Taguig City Center for the Elderly</Text>
 
-      <Text style={styles.description}>
-        The five-storey wellness hub for Taguigeño senior citizens was opened
-        last April, and features a therapy pool, a massage room, two saunas, a
-        yoga room, a gym, and cinema for relaxation purposes. It also comes with
-        a dialysis center to accommodate 15 patients at a time, and a
-        multi-purpose hall for city programs and recreational activities.
-      </Text>
-      <Text style={styles.title1}>Organizations</Text>
-      <View style={styles.rowcontainer}>
-        <View style={styles.firstrow}>
-          <Image
-            source={require("../../assets/favicon.png")}
-            style={styles.logo}
-            resizeMode="contain"
-          />
+        <Text style={styles.description}>
+          The five-storey wellness hub for Taguigeño senior citizens was opened
+          last April, and features a therapy pool, a massage room, two saunas, a
+          yoga room, a gym, and cinema for relaxation purposes. It also comes
+          with a dialysis center to accommodate 15 patients at a time, and a
+          multi-purpose hall for city programs and recreational activities.
+        </Text>
+        <Text style={styles.title1}>Organizations</Text>
+        <View style={styles.rowcontainer}>
+          <View style={styles.firstrow}>
+            <Image
+              source={require("../../assets/favicon.png")}
+              style={styles.logo}
+              resizeMode="contain"
+            />
+          </View>
+          <View style={styles.secondrow}>
+            <Image
+              source={require("../../assets/osca-logo.png")}
+              style={styles.logo}
+              resizeMode="contain"
+            />
+          </View>
+          <View style={styles.thirdrow}>
+            <Image
+              source={require("../../assets/tup.png")}
+              style={styles.logo}
+              resizeMode="contain"
+            />
+          </View>
+          <View style={styles.fourthrow}>
+            <Image
+              source={require("../../assets/ilovetaguig.png")}
+              style={styles.logo}
+              resizeMode="contain"
+            />
+          </View>
         </View>
-        <View style={styles.secondrow}>
-          <Image
-            source={require("../../assets/osca-logo.png")}
-            style={styles.logo}
-            resizeMode="contain"
-          />
-        </View>
-        <View style={styles.thirdrow}>
-          <Image
-            source={require("../../assets/tup.png")}
-            style={styles.logo}
-            resizeMode="contain"
-          />
-        </View>
-        <View style={styles.fourthrow}>
-          <Image
-            source={require("../../assets/ilovetaguig.png")}
-            style={styles.logo}
-            resizeMode="contain"
-          />
-        </View>
-      </View>
+      </ScrollView>
+
+      {/* Modal */}
       <Modal
         animationType="fade"
         transparent={true}
@@ -192,10 +218,10 @@ const styles = StyleSheet.create({
     bottom: 200,
   },
   modalBody: {
-    flex: 1, 
+    flex: 1,
     width: "100%",
     alignItems: "center",
-    borderRadius:10
+    borderRadius: 10,
   },
   image: {
     height: 250,

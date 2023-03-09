@@ -53,7 +53,7 @@ function ServiceProgressSteps(props) {
 
   // Dates
   const [selectedDate, setSelectedDate] = useState(null);
-  const today = new Date();
+  const today = moment(new Date()).format("yyyy-MM-DD"); 
   const markedWeekends = {};
   const [existingDates, setExistingDates] = useState();
 
@@ -207,7 +207,6 @@ function ServiceProgressSteps(props) {
         purpose: purpose,
         attendees_number: attendees,
       };
- 
 
       setLoading(true);
       axios

@@ -2,6 +2,7 @@ import React, { useCallback, useContext, useState } from "react";
 import {
   Dimensions,
   Image,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -101,10 +102,6 @@ function Health(props) {
             ]);
         })
         .catch((error) => console.log(error));
-
-      // return () => {
-      //   setUserProfile();
-      // };
     }, [])
   );
 
@@ -147,12 +144,17 @@ function Health(props) {
 
   // Populating Data from database
   const sakits = userProfile && userProfile.health;
-  const results =
+  var results = new Array();
+  const resultHealth =
     sakits &&
     sakits.map((sakit) => {
       let records = { id: sakit._id, name: sakit.health_problem };
-      return records;
+      results.push(records);
     });
+
+  // console.log(results);
+  // console.log(results);
+  // console.log("sakits",sakits);
 
   const onSelectedItemsChange = (selectedItems) => {
     setSelectedItems(selectedItems);
@@ -173,7 +175,7 @@ function Health(props) {
       formData.append("requirement_id", element);
     });
     formData.append("confirm", confirm);
- 
+
     const config = {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -235,7 +237,7 @@ function Health(props) {
         </View>
       </Container> */}
 
-      <FormContainerProfile
+      <ScrollView style={styles.healthbody}
       // title={userProfile ? userProfile.user.user_name : ""}
       >
         <View style={styles.MainContainer}>
@@ -456,24 +458,24 @@ function Health(props) {
             hideDropdown={true}
           />
         </View>
-        <View style={[styles.Lowercontainer, { flex: 1 }]}>
-          {/* Checkbox Confirm */}
-          <View style={styles.CheckboxConfirm}>
-            <Checkbox
-              status={confirm ? "checked" : "unchecked"}
-              color="red"
-              onPress={() => {
-                [
-                  confirm
-                    ? setConfirm(false)
-                    : // false
-                      setConfirm(true),
-                  setConfirm(!confirm),
-                ];
-              }}
-            />
-            <Text style={styles.label}>I verify all the information</Text>
-          </View>
+        {/* Checkbox Confirm */}
+        <View style={styles.checkboxContainer}>
+          <Checkbox
+            status={confirm ? "checked" : "unchecked"}
+            color="red"
+            onPress={() => {
+              [
+                confirm
+                  ? setConfirm(false)
+                  : // false
+                    setConfirm(true),
+                setConfirm(!confirm),
+              ];
+            }}
+          />
+          <Text style={styles.label}>I verify all the Information</Text>
+        </View>
+        <View style={[styles.Lowercontainer]}>
           <TouchableOpacity
             style={[confirm ? styles.appButtonUpdate1 : styles.appButtonUpdate]}
             onPress={() => [UpdateHealth()]}
@@ -482,7 +484,7 @@ function Health(props) {
             <Text style={styles.appButtonTextUpdate}>Submit</Text>
           </TouchableOpacity>
         </View>
-      </FormContainerProfile>
+      </ScrollView>
     </SafeAreaProvider>
   );
 }
@@ -536,7 +538,6 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
   Lowercontainer: {
-    justifyContent: "center",
     padding: 15,
   },
   appButtonTextUpdate: {
@@ -586,11 +587,13 @@ const styles = StyleSheet.create({
   MainContainer: {
     flex: 1,
     padding: 12,
-    backgroundColor: "white",
-    width: windowWidth / 1.2,
+    backgroundColor: Colors.main,
+    width: windowWidth / 1.1,
     borderRadius: 5,
     borderWidth: 1.5,
-    borderColor: Colors.red,
+    borderColor: Colors.red, 
+    alignSelf:"center",
+    marginTop:10
   },
   text: {
     padding: 12,
@@ -602,25 +605,24 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flex: 1,
   },
-  Checkboxdetail: {
-    width: "100%",
+  checkboxContainer: {
     flexDirection: "row",
-    // margin: 5,
-  },
-  CheckboxConfirm: {
-    width: "60%",
-    flexDirection: "row",
-    alignSelf: "center",
-  },
+    marginTop: 10, 
+    alignSelf:"center"
+  }, 
   label: {
     fontSize: 16,
     marginTop: 6,
-    width: "90%",
-    textAlign: "left",
+    textAlign:"justify"
   },
+
   spinnerTextStyle: {
     color: "red",
   },
+  Checkboxdetail:{ 
+    flexDirection: "row", 
+    paddingRight:32
+  }
 });
 
 export default Health;

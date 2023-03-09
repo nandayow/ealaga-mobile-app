@@ -68,8 +68,7 @@ function FunctionList(props) {
     if (status !== undefined) {
       setModalVisibLoading(true);
       setTimeout(() => {
-        console.log(userProfile && userProfile.user.account_verified);
-        setModalVisibLoading(false);
+         setModalVisibLoading(false);
         userProfile && userProfile.user.account_verified === "pending"
           ? setModalVisible(true)
           : userProfile && userProfile.user.account_verified === "not verified"

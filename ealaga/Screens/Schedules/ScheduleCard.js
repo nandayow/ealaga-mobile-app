@@ -165,11 +165,6 @@ function ScheduleCard(props) {
     try {
       const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
-        // {
-        //   title: "Image Download Permission",
-        //   message: "Your permission is required to save images to your device",
-        //   buttonPositive: "Allow",
-        // }
       );
 
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
@@ -197,7 +192,7 @@ function ScheduleCard(props) {
           return;
         } else {
           // cameraroll saves image
-          MediaLibrary.requestPermissionsAsync()
+          MediaLibrary.requestPermissionsAsync();
           const image = MediaLibrary.saveToLibraryAsync(uri);
           if (image) {
             alert(
@@ -233,9 +228,9 @@ function ScheduleCard(props) {
         />
         <View style={styles.container}>
           {userProfile && userProfile.filter.length > 0 ? (
-            schedules.map((schedule) => {
+            schedules.map((schedule ,i) => {
               return (
-                <Card style={styles.card}>
+                <Card style={styles.card} key = {i}>
                   <Image
                     source={
                       schedule.category === "Recreational Activity"

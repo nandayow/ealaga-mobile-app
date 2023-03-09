@@ -105,10 +105,10 @@ function DonationCard(props) {
       >
         <View style={styles.container}>
           {mydonations && mydonations.donation.length > 0 ? (
-            donations.map((donation) => {
-              console.log(donations);
+            donations.map((donation, i) => {
+              // console.log(i);
               return (
-                <Card style={styles.card}>
+                <Card style={styles.card} key={i}>
                   <Image
                     source={
                       donation.category === "Clothing"

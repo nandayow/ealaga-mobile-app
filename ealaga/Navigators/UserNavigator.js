@@ -1,18 +1,15 @@
-import React, { useContext } from "react";
+import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 
 //  Screens
-import VisitorViewContainer from "../Screens/Visitors/VisitorViewContainer";
+import VisitorViewContainer from "../Screens/Visitors/Index";
 import LoginContainer from "../Screens/User/Login";
 import Register from "../Screens/User/Register";
 import ForgotPassword from "../Screens/User/ForgotPassword";
-import AuthGlobal from "../Context/store/AuthGlobal";
 
 const Stack = createStackNavigator();
 
-function MyStack() {
-  const context = useContext(AuthGlobal);
-
+function UserStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -22,7 +19,7 @@ function MyStack() {
           headerShown: false,
         }}
       />
-      {/* {context.stateUser.isAuthenticated === true ? ( */}
+
       <Stack.Screen
         name="Login"
         component={LoginContainer}
@@ -30,8 +27,6 @@ function MyStack() {
           headerShown: false,
         }}
       />
-
-      {/* ) : ( null )}    */}
 
       <Stack.Screen
         name="Register"
@@ -52,5 +47,5 @@ function MyStack() {
 }
 
 export default function UserNavigator() {
-  return <MyStack />;
+  return <UserStack />;
 }

@@ -1,36 +1,31 @@
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useState } from "react";
 import { Dimensions, StyleSheet, View, Text, ScrollView } from "react-native";
+import { useFocusEffect } from "@react-navigation/native"; 
 
 import Colors from "../../Shared/Color";
 import Header from "../../Shared/Header";
-import FunctionList from "../Home/FunctionList";
+import Features from "./Features";
 
 import AuthGlobal from "../../Context/store/AuthGlobal";
-import { useFocusEffect } from "@react-navigation/native";
 import moment from "moment";
-
-const windowWidth = Dimensions.get("window").width;
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
+import baseURL from "../../assets/common/baseUrl";
+ 
+// Dimension
 const windowHeight = Dimensions.get("window").height;
 
-const HomeContainer = (props) => {
+const HomeContainer = (props,) => {
   const context = useContext(AuthGlobal);
   const [hours, setHours] = useState("");
   const [greeting, setGreeting] = useState("Good Morning!");
   const [username, setUserame] = useState("");
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
-  useEffect(() => {
-    var oras = moment().hours(); //Current Hours
 
-    setHours(oras);
-    if (hours < 12) {
-      setGreeting("Good Morning!");
-    } else if (hours > 12 && hours < 18) {
-      setGreeting("Good Afternoon!");
-    } else {
-      setGreeting("Good Evening!");
-    }
-  }, [hours]);
+  const oras = moment().hours(); //Current Hours
+
+  
 
   useFocusEffect(
     useCallback(() => {
@@ -40,29 +35,46 @@ const HomeContainer = (props) => {
       ) {
         props.navigation.navigate("User");
       }
-      setUserame(context.stateUser.user.username);
-      setFirstname(context.stateUser.user.firstname);
-      setLastname(context.stateUser.user.lastname);
+      // props.navigation.navigate.popToTop();
+      AsyncStorage.getItem("jwt")
+        .then((res) => {
+          axios
+            .get(
+              `${baseURL}users/profile/edit/${context.stateUser.user.userId}`,
+              {
+                headers: { Authorization: `Bearer ${res}` },
+              }
+            )
+            .then((userData) => [
+              setUserame(userData.data.user.user_name),
+              setFirstname(userData.data.user.first_name),
+              setLastname(userData.data.user.last_name),
+            ]);
+        })
+        .catch((error) => console.log(error));
 
-      // console.log(context.stateUser.user)
-      return () => {
-        setUserame();
-      };
-    }, [context.stateUser.isAuthenticated, username, firstname, lastname])
+      setHours(oras);
+      if (hours < 12) {
+        setGreeting("Good Morning!");
+      } else if (hours > 12 && hours < 18) {
+        setGreeting("Good Afternoon!");
+      } else {
+        setGreeting("Good Evening!");
+      } 
+  
+    }, [])
   );
-
-  // console.log(context.stateUser.user.account_verified);
 
   return (
     <View>
-      <Header navigation={props.navigation} />
+      <Header/>
       <View style={styles.container}>
         <Text style={styles.greeting}>{greeting}</Text>
         <Text style={styles.username}>
           {firstname} {lastname}
         </Text>
         <ScrollView>
-          <FunctionList navigation={props.navigation} />
+          <Features navigation={props.navigation} />
         </ScrollView>
       </View>
     </View>

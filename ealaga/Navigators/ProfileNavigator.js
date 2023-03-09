@@ -5,7 +5,7 @@ import ProfileInfoNavigator from "./ProfileInfoNavigator";
 
 const Stack = createNativeStackNavigator();
 
-function MyStack() {
+function ProfileStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -20,5 +20,5 @@ function MyStack() {
 }
 
 export default function ProfileNavigator() {
-  return <MyStack />;
+  return <ProfileStack />;
 }
